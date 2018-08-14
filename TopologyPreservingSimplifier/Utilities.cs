@@ -47,13 +47,11 @@ namespace Utilities
             // note: this means interior rings are not handled
             // could convert to polygons and then use .Shell?
             return shapes.Select(o => o.Value.Boundary).ToList();
-            //if (OutputFolder != null) OutputAsGeoJson(boundaries, "1-boundaries");
         }
 
         public static IGeometry Union(IEnumerable<IGeometry> shapes)
         {
             return new NetTopologySuite.Operation.Union.UnaryUnionOp(shapes).Union();
-            //if (OutputFolder != null) OutputAsGeoJson(unionedBoundaries, "2-unionedBoundaries");
         }
 
         public static IList<IGeometry> MergeLines(IGeometry geometry)
@@ -61,14 +59,12 @@ namespace Utilities
             var lineMerger = new LineMerger();
             lineMerger.Add(geometry);
             return lineMerger.GetMergedLineStrings();
-            //if (OutputFolder != null) OutputAsGeoJson(mergedLineStrings, "3-mergedLineStrings");
         }
 
         public static IGeometry Simplify(IEnumerable<IGeometry> geometries, double tolerance)
         {
             var geometryCollection = new GeometryCollection(geometries.ToArray());
             return NetTopologySuite.Simplify.TopologyPreservingSimplifier.Simplify(geometryCollection, tolerance);
-            //if (OutputFolder != null) OutputAsGeoJson(simplified, "4-simplified");
         }
 
         public static ICollection<IGeometry> Polygonize(IGeometry geometry)
@@ -76,14 +72,12 @@ namespace Utilities
             var polygonizer = new Polygonizer(false);
             polygonizer.Add(geometry);
             return polygonizer.GetPolygons();
-            //if (OutputFolder != null) OutputAsGeoJson(newPolygons, "5-newPolygons");
         }
 
         public static IEnumerable<IGeometry> Reduce(ICollection<IGeometry> geometries, double precision)
         {
             var reducer = new GeometryPrecisionReducer(new PrecisionModel(precision));
             return geometries.Select(o => reducer.Reduce(o));
-            //if (OutputFolder != null) OutputAsGeoJson(reduced, "6-reduced");
         }
 
         public static Dictionary<string, IGeometry> Match(IEnumerable<IGeometry> geometries, Dictionary<string, IGeometry> shapes)
@@ -109,7 +103,6 @@ namespace Utilities
                 }
             }
             return matched;
-            //if (OutputFolder != null) OutputAsGeoJson(matched, "7-matched");
         }
 
         public static Dictionary<string, IGeometry> MakeValid(Dictionary<string, IGeometry> shapes)
@@ -138,7 +131,6 @@ namespace Utilities
                 }
             }
             return results;
-            //if (OutputFolder != null) OutputAsGeoJson(results, "8-results");
         }
     }
 }
