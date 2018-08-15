@@ -82,9 +82,6 @@ namespace Utilities
 
         public static Dictionary<string, IGeometry> Match(IEnumerable<IGeometry> geometries, Dictionary<string, IGeometry> shapes)
         {
-            // this will error if there are multipolygons that have the same key. 
-            // either: remove the shape so only 1 result is returned per key, 
-            // or:     use a non-unique results key, then combine multiple keys into multipolygons with single key
             var matched = new Dictionary<string, IGeometry>();
             foreach (Polygon geometry in geometries)
             {
